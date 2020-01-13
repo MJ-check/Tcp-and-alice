@@ -1,6 +1,9 @@
 #!/usr/bin/env python
-
 #-*-coding:utf-8-*-
+
+'''服务器使用的服务器模块，提供服务器可以使用的功能
+   目前包含使用asml库实现简单的人机对话以及实现服务器程序简单的函数使用
+'''
 
 from socket import *
 import time
@@ -11,13 +14,6 @@ def creatTcpServerSocket(ADDR):
 	tcpServerSocket.bind(ADDR)
 	tcpServerSocket.listen(5)
 	return tcpServerSocket
-
-
-def creatTcpClientSocket(ADDR):
-	tcpClientSocket = socket(AF_INET, SOCK_STREAM)
-	tcpClientSocket.connect(ADDR)
-	return tcpClientSocket
-
 
 def creatTcpServer(PORT, HOST = "", BFSIZE = 1024):
     ADDR = (HOST, PORT)
@@ -38,26 +34,3 @@ def creatTcpServer(PORT, HOST = "", BFSIZE = 1024):
             tcpClientSocket.send(data)
         tcpClientSocket.close()
     tcpServerSocket.close()
-
-    
-
-def creatTcpClient(PORT, HOST = "localhost", BFSIZE = 1024):
-    ADDR = (HOST, PORT)
-    tcpClientSocket = creatTcpClientSocket(ADDR)
-
-    while True:
-        data = input("> ")
-        if not data:
-            break
-        string = "[%s]\nMe: %s" % (time.ctime(), data)
-        print(string)
-        data = bytes(data, 'utf-8')
-        tcpClientSocket.send(data)
-
-        data = tcpClientSocket.recv(BFSIZE)
-        if not data:
-            break
-        data = data.decode('utf-8')
-        data = "[%s]\nAlice: %s" % (time.ctime(), data)
-        print(data)
-    tcpClientSocket.close()
