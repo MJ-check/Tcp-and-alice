@@ -6,29 +6,31 @@
 '''
 
 from socket import *
+import translator
 import time
 import alice
 
 def creatTcpServerSocket(ADDR):
-	tcpServerSocket = socket(AF_INET, SOCK_STREAM)
-	tcpServerSocket.bind(ADDR)
-	tcpServerSocket.listen(5)
-	return tcpServerSocket
+    tcpServerSocket = socket(AF_INET, SOCK_STREAM)
+    tcpServerSocket.bind(ADDR)
+    tcpServerSocket.listen(5)
+    return tcpServerSocket
 
 def creatTcpServer(PORT, HOST = "", BFSIZE = 1024):
     ADDR = (HOST, PORT)
     tcpServerSocket = creatTcpServerSocket(ADDR)
 
     while True:
-        print("wait for connect")
+        print("wait for connect...")
         tcpClientSocket, addr = tcpServerSocket.accept()
-        print("connectted from:", addr)
+        print("...connectted from:", addr)
 
         while True:
             data = tcpClientSocket.recv(BFSIZE)
             if not data:
                 break
             data = data.decode("utf-8")
+            data = translator.youDaoTranslate(data, fromlanguage = 'AUTO', tolanguage = 'en')
             data = alice.aliceRespond(data)
             data = bytes(data, "utf-8")
             tcpClientSocket.send(data)
