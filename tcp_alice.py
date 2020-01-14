@@ -32,6 +32,7 @@ def creatTcpServer(PORT, HOST = "", BFSIZE = 1024):
             data = data.decode("utf-8")
             data = translator.youDaoTranslate(data, fromlanguage = 'AUTO', tolanguage = 'en')
             data = alice.aliceRespond(data)
+            data = translator.youDaoTranslate(data, fromlanguage='en', tolanguage='zh-CHS')
             data = bytes(data, "utf-8")
             tcpClientSocket.send(data)
         tcpClientSocket.close()
