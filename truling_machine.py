@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+
 # -*- coding:utf-8 -*-
 
 '''
@@ -24,7 +24,7 @@ def trulingResponse(text):
             },
         },
         "userInfo": {
-            "apiKey": "bbe56978fe0140bba232bfe77212b560",
+            "apiKey": "ba641e8c1f2e4afe910e99c8060aa1cc",
             "userId": "553827"
         }
     }
@@ -40,8 +40,16 @@ def trulingResponse(text):
     return results
 
 
-if __name__ == '__main__':
+def trulingServer():
+    '''像使用服务器一样使用图灵机器人'''
     while True:
         input_text = input(">>>")
-        response_text = trulingResponse(input_text)
-        print('Truling Machine Response: '+response_text)
+        if input_text:
+            response_text = trulingResponse(input_text)
+            print('Truling Machine Response: '+response_text)
+        else:
+            break
+
+
+if __name__ == '__main__':
+    trulingServer()
